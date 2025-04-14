@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ChevronRight, Coffee, Copy, Edit2, Plus, Save, Trash2, UtensilsCrossed, Utensils, Apple } from "lucide-react"
+import { ChevronRight, Coffee, Edit2, Plus, Trash2, UtensilsCrossed, Utensils, Apple } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -26,7 +26,7 @@ export function MealPlanWidget({ meals, className }: MealPlanWidgetProps) {
   }
 
   const [mealPlan, setMealPlan] = useState<MealPlan>(initialMealPlan)
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing] = useState(false)
   const [editingMeal, setEditingMeal] = useState<Meal | null>(null)
   const [newMeal, setNewMeal] = useState<Partial<Meal>>({
     name: "",
@@ -36,25 +36,6 @@ export function MealPlanWidget({ meals, className }: MealPlanWidgetProps) {
     fat: 0,
     carbs: 0,
   })
-
-  const getMealIcon = (type: Meal["type"]) => {
-    switch (type) {
-      case "breakfast":
-        return <Coffee className="h-5 w-5" />
-      case "lunch":
-        return <Utensils className="h-5 w-5" />
-      case "dinner":
-        return <UtensilsCrossed className="h-5 w-5" />
-      case "snack":
-        return <Apple className="h-5 w-5" />
-      default:
-        return <Utensils className="h-5 w-5" />
-    }
-  }
-
-  const getMealTitle = (type: Meal["type"]) => {
-    return type.charAt(0).toUpperCase() + type.slice(1)
-  }
 
   const calculateTotalMacros = (meals: Meal[]) => {
     return meals.reduce(

@@ -5,8 +5,6 @@ import {
 } from "@/components/ui/dialog"
 import { MedsList } from "./MedsList"
 
-const COLORS = ["bg-blue-100", "bg-green-100", "bg-yellow-100", "bg-red-100", "bg-purple-100"];
-
 type MedsDialogProps = React.PropsWithChildren<{
   dialogOpen: boolean;
   setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;

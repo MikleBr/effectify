@@ -1,7 +1,7 @@
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useBooksStore, Book } from "../lib/useBooksStore";
+import { useBooksStore } from "../lib/useBooksStore";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,7 +46,12 @@ export function CreateBook({ goToMainScreen }: CreateBookProps) {
   const addBook = useBooksStore((s) => s.addBook);
 
   const onSubmit = (createBookData: CreateBookFormData) => {
-    addBook(createBookData);
+    addBook({
+      totalPages: parseInt(createBookData.totalPages, 10),
+      author: createBookData.author,
+      title: createBookData.title,
+      status: createBookData.status,
+    });
     goToMainScreen?.();
   };
 

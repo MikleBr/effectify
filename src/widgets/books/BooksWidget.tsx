@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { BookDashedIcon, BookIcon, BookOpen, CheckIcon, CircleCheck } from "lucide-react";
+import { BookDashedIcon, BookIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBooksStore } from "./lib/useBooksStore";
 import { useState } from "react";

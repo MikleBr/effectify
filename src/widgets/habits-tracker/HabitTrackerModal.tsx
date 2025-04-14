@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2, Plus } from "lucide-react";
 
-type Habit = {
+export type Habit = {
   id: number;
   icon?: string;
   name: string;
@@ -64,17 +64,6 @@ export function HabitTrackerModal({ isOpen, onClose, habits, setHabits }: HabitT
           : [...h.doneDates, today],
       };
     }));
-  };
-
-  const calcStreak = (habit: Habit) => {
-    const dates = new Set(habit.doneDates);
-    let streak = 0;
-    let date = new Date();
-    while (dates.has(format(date, "yyyy-MM-dd"))) {
-      streak++;
-      date.setDate(date.getDate() - 1);
-    }
-    return streak;
   };
 
   const deleteHabit = (id: number) => {
@@ -205,7 +194,6 @@ export function HabitTrackerModal({ isOpen, onClose, habits, setHabits }: HabitT
             <h3 className="text-lg font-medium mb-2">{selectedHabit.name}</h3>
             <p className="text-sm text-muted-foreground mb-2">{selectedHabit.description}</p>
             <p className="text-sm mb-2">Группа: {selectedHabit.group}</p>
-            <p className="text-sm mb-2">Серия: {calcStreak(selectedHabit)} дней подряд</p>
             <p className="text-sm mb-2">
               Отмечено: {selectedHabit.doneDates.length} раз
             </p>

@@ -8,13 +8,16 @@ export type Book = {
   title: string
   author: string
   totalPages: number
-  currentPage: number
   status: BookStatus
+  currentPage: number
 }
 
 type BooksState = {
   books: Book[]
   currentBookId: number | null
+}
+
+type Actions = {
   addBook: (book: Omit<Book, "id" | "currentPage">) => void
   updateBook: (id: number, updates: Partial<Book>) => void
   deleteBook: (id: number) => void
@@ -24,7 +27,7 @@ type BooksState = {
   setCurrentBook: (id: number) => void
 }
 
-export const useBooksStore = create<BooksState>()(
+export const useBooksStore = create<BooksState & Actions>()(
   persist(
     (set) => ({
       books: [],
@@ -33,10 +36,9 @@ export const useBooksStore = create<BooksState>()(
       addBook: (book) =>
         set((state) => {
           const id = Date.now()
-          const newBook = { ...book, id }
+          const newBook: Book = { ...book, id, currentPage: 0, }
           return {
             books: [...state.books, newBook],
-            currentBookId: book.status === "reading" ? id : state.currentBookId,
           }
         }),
 
@@ -56,10 +58,11 @@ export const useBooksStore = create<BooksState>()(
 
       markAsRead: (id) =>
         set((state) => {
-          const books = state.books.map((b) =>
-            b.id === id ? { ...b, status: "finished", currentPage: b.totalPages } : b
-          )
-          const next = books.find((b) => b.status === "reading" && b.id !== id)?.id || null
+          const books: Book[] = state.books.map((book) =>
+            book.id === id ? { ...book, status: "finished", currentPage: book.totalPages } : book
+          );
+          const next = books.find((b) => b.status === "reading" && b.id !== id)?.id || null;
+
           return { books, currentBookId: next }
         }),
 

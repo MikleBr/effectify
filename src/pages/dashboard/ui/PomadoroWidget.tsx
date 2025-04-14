@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react"
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
-  CardAction,
   CardDescription,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { MoreHorizontal, SkipForward, Play, Pause } from "lucide-react"
+import { SkipForward, Play, Pause } from "lucide-react"
 
 const LOCAL_STORAGE_KEY = "pomodoroSettings"
 
@@ -39,7 +34,6 @@ export function PomodoroWidget({ className }: PomodoroWidgetProps) {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS)
   const [timeLeft, setTimeLeft] = useState(settings[mode] * 60)
   const [isRunning, setIsRunning] = useState(false)
-  const [openSettings, setOpenSettings] = useState(false)
   const [cycleCount, setCycleCount] = useState(0)
 
   useEffect(() => {

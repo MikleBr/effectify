@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import {
   Card,
   CardHeader,
@@ -22,9 +22,21 @@ const SECTIONS = [
   { id: "lunch", label: "Lunch" },
   { id: "dinner", label: "Dinner" },
   { id: "snacks", label: "Snacks" },
-]
+];
 
-const initialMenu = {
+type MenuItem = {
+  name: string;
+  calories: number;
+  proteins: number;
+  fats: number;
+  carbs: number;
+};
+
+type Menu = {
+  [key: string]: MenuItem[];
+};
+
+const initialMenu: Menu = {
   breakfast: [
     {
       name: "Oatmeal with berries",
@@ -72,11 +84,10 @@ const initialMenu = {
 
 type MealPlannerWidgetProps = {
   className?: string;
-}
+};
 
 export function MealPlannerWidget({ className }: MealPlannerWidgetProps) {
-  const [menu, setMenu] = useState(initialMenu)
-  const [selected, setSelected] = useState<{ section: string; item: any } | null>(null)
+  const [menu] = useState(initialMenu);
 
   const totals = Object.values(menu).flat().reduce(
     (acc, item) => {
@@ -103,12 +114,11 @@ export function MealPlannerWidget({ className }: MealPlannerWidgetProps) {
             <h4 className="text-sm text-muted-foreground">{label}</h4>
             <div className="space-y-1">
               {menu[id]?.map((item, index) => (
-                <Dialog key={index} onOpenChange={(open) => !open && setSelected(null)}>
+                <Dialog key={index}>
                   <DialogTrigger asChild>
                     <Button
                       variant="outline"
                       className="w-full flex justify-between items-center"
-                      onClick={() => setSelected({ section: id, item })}
                     >
                       <span>{item.name}</span>
                       <ChevronRight className="w-4 h-4" />

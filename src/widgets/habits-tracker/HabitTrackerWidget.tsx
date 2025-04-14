@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { HabitTrackerModal } from "./HabitTrackerModal";
+import { Habit, HabitTrackerModal } from "./HabitTrackerModal";
 import { PlusIcon } from "lucide-react";
 
-const LOCAL_STORAGE_KEY = "dailyHabits";
-
-const defaultHabits = [
+const defaultHabits: Habit[] = [
   // { id: 1, icons: "💧", name: "Вода", done: false },
   // { id: 2, icons: "🧘", name: "Медитация", done: false },
   // { id: 3, icons: "📖", name: "Читать", done: false },
@@ -22,23 +20,6 @@ type HabitTrackerWidgetProps = {
 export function HabitTrackerWidget({ className }: HabitTrackerWidgetProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [habits, setHabits] = useState(defaultHabits);
-
-  // useEffect(() => {
-  //   const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-  //   if (saved) setHabits(JSON.parse(saved));
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(habits));
-  // }, [habits]);
-
-  const toggleHabit = (id: number) => {
-    setHabits((prev) =>
-      prev.map((habit) =>
-        habit.id === id ? { ...habit, done: !habit.done } : habit,
-      ),
-    );
-  };
 
   return (
     <Card className={cn("w-full", className)}>

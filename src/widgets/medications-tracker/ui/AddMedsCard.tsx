@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import {
-  DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -8,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ScheduleType, useMedsStore } from "../lib/store";
+import { ScheduleType } from "../lib/store";
 import {
   Form,
   FormControl,
@@ -33,23 +32,12 @@ const createMedsSchema = z.object({
 });
 
 export function AddMedsCard() {
-  const { addMed } = useMedsStore();
-
   const form = useForm({
     resolver: zodResolver(createMedsSchema),
     defaultValues: {
       frequency: ScheduleType.EVERYDAY,
     }
   });
-
-  const onSubmit = (data: z.infer<typeof createMedsSchema>) => {
-    addMed({
-      name: data.name,
-      dosage: data.dosage,
-      // frequency: data.frequency,
-      // times: data.times,
-    });
-  };
 
   return (
     <>
@@ -58,7 +46,7 @@ export function AddMedsCard() {
       </DialogHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form className="space-y-4">
           <FormField
             control={form.control}
             name="name"

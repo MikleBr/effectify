@@ -13,7 +13,7 @@ type DailyTasksWidgetProps = {
 };
 
 export default function DailyTasksWidget({ className }: DailyTasksWidgetProps) {
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showCreateForm] = useState(false);
 
   const [tasks, setTasks] = useState<
     { id: number; text: string; done: boolean }[]
