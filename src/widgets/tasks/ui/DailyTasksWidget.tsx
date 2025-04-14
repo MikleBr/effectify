@@ -27,8 +27,13 @@ export function DailyTasksWidget({ className }: DailyTasksWidgetProps) {
   >(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) {
-      return JSON.parse(saved);
+      try {
+        return JSON.parse(saved)
+      } catch {
+        return []
+      }
     }
+    return [];
   });
 
   useEffect(() => {
