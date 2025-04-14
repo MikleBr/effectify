@@ -7,7 +7,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2, Plus } from "lucide-react";
-import { format } from "date-fns";
 
 type Habit = {
   id: number;
@@ -30,7 +29,8 @@ const groups = ["Здоровье", "Продуктивность", "Хобби"
 export function HabitTrackerModal({ isOpen, onClose, habits, setHabits }: HabitTrackerModalProps) {
   const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const today = format(new Date(), "yyyy-MM-dd");
+  // const today = format(new Date(), "yyyy-MM-dd");
+  const today = '2025-12-12'
 
   const form = useForm({
     defaultValues: {
