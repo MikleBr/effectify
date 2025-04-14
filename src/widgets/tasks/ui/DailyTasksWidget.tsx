@@ -7,10 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Ellipsis, Trash2 } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TasksDialog } from "./TasksDialog";
 
