@@ -26,15 +26,7 @@ export function CurrentDay({ className }: CurrentDayProps) {
 
   const [api, setApi] = useState<CarouselApi | null>(null);
 
-  const lastWeekDay = new Date(today);
-  lastWeekDay.setDate(today.getDate() - 7);
-
-  const newWeekDay = new Date(today);
-  newWeekDay.setDate(today.getDate() + 7);
-
-  const curretnWeekDays = getWeekDays(lastWeekDay);
-  const prevWeekDays = getWeekDays(today);
-  const nextWeekDays = getWeekDays(newWeekDay);
+  const days = getDatesAroundDate(today)
 
   const todayName = Intl.DateTimeFormat("en-US", {
     weekday: "long",
@@ -81,11 +73,7 @@ export function CurrentDay({ className }: CurrentDayProps) {
           startIndex: 4,
         }}>
           <CarouselContent>
-            {[
-              ...prevWeekDays,
-              ...curretnWeekDays,
-              ...nextWeekDays,
-            ].map((day) => {
+            {days.map((day) => {
               const isToday = day.toDateString() === today.toDateString();
 
               return (
@@ -116,19 +104,22 @@ export function CurrentDay({ className }: CurrentDayProps) {
   );
 }
 
-function getWeekDays(date: Date) {
-  const today = new Date(date.getTime());
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay() + 1);
+function getDatesAroundDate(inputDate = new Date()) {
+    const dates = [];
+    const referenceDate = new Date(inputDate);
 
-  const weekDays = [];
+    // Устанавливаем начальную дату на неделю до указанной даты
+    const startDate = new Date(referenceDate);
+    startDate.setDate(referenceDate.getDate() - 7);
 
-  for (let i = 0; i < 7; i++) {
-    const day = new Date(startOfWeek);
-    day.setDate(startOfWeek.getDate() + i);
+    // Устанавливаем конечную дату на неделю после указанной даты
+    const endDate = new Date(referenceDate);
+    endDate.setDate(referenceDate.getDate() + 7);
 
-    weekDays.push(day);
-  }
+    // Генерируем массив дат
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        dates.push(new Date(d));
+    }
 
-  return weekDays;
+    return dates;
 }
