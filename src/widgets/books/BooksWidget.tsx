@@ -35,6 +35,17 @@ export function BooksWidget({ className }: BooksWidgetProps) {
               Open Library
             </Button>
           </div>}
+          {books.length !== 0 && !current && <div className="text-center space-y-2">
+            <div className="mx-auto size-14 rounded-lg flex items-center justify-center bg-muted">
+                <BookDashedIcon className="mx-auto size-10 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              You don't read the book
+            </p>
+            <Button variant="outline" onClick={() => setOpen(true)}>
+              Start Reading
+            </Button>
+          </div>}
           {current && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">

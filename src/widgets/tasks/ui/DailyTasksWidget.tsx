@@ -63,7 +63,7 @@ export function DailyTasksWidget({ className }: DailyTasksWidgetProps) {
   return (
       <Card className={cn("w-full max-w-md", className)}>
         <CardHeader>
-          <CardTitle>Tasks</CardTitle>
+          <CardTitle>Reminder</CardTitle>
           <CardDescription>{tasks.filter(it => !it.done).length} tasks remaining</CardDescription>
           <CardAction>
             <TasksDialog

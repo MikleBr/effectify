@@ -47,7 +47,7 @@ export function TasksDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Tasks</DialogTitle>
+          <DialogTitle>Reminders</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleAddTask} className="flex gap-2">

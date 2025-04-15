@@ -34,7 +34,7 @@ type Actions = {
   updateTodayProgress: (progressValue: number) => void;
 };
 
-export const useBooksStore = create<BooksState & Actions>()(
+export const useRemindersStore = create<BooksState & Actions>()(
   persist(
     (set) => ({
       books: [],

@@ -38,7 +38,7 @@ export function MedsTrackerWidget({ className }: MedsTrackerWidgetProps ) {
       setDialogOpen={setDialogOpen}
     >
       <Card className={cn('aspect-square w-full pb-0 gap-3', className)}>
-        {meds.length !== 0 && <CardHeader className="flex flex-row justify-between items-center pb-2">
+        {meds.length !== 0 && <CardHeader>
           <CardTitle>Meds</CardTitle>
         </CardHeader>}
         <CardContent className="overflow-y-auto hide-scrollbar pb-6">
