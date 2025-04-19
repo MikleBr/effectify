@@ -1,138 +1,84 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type BookStatus = "want" | "reading" | "finished";
+const REMINDER_LOCAL_STORAGE_KEY = "reminders-storage";
 
-export type Book = {
-  id: number;
+export enum ScheduleType {
+  ONCE = 'once',
+  EVERYDAY = 'everyday',
+}
+
+type Schedule = {
+  type: ScheduleType.ONCE,
+  date: string;
+} | {
+  type: ScheduleType.EVERYDAY,
+  time: string;
+};
+
+export type Reminder = {
+  id: string;
   title: string;
-  author: string;
-  totalPages: number;
-  status: BookStatus;
-  currentPage: number;
+  description: string;
+  schedule: Schedule;
 };
 
-type BooksState = {
-  books: Book[];
-  currentBookId: number | null;
-  /**
-   * Reading progress
-   * key date format - yyyy-mm-dd
-   */
-  progress: Record<string, number>;
+type RemindersState = {
+  reminders: Reminder[];
 };
 
-type Actions = {
-  addBook: (book: Omit<Book, "id" | "currentPage">) => void;
-  updateBook: (id: number, updates: Partial<Book>) => void;
-  deleteBook: (id: number) => void;
-  markAsRead: (id: number) => void;
-  startReading: (id: number) => void;
-  rereadBook: (id: number) => void;
-  setCurrentBook: (id: number) => void;
-  updateProgress: (date: Date, progressValue: number) => void;
-  updateTodayProgress: (progressValue: number) => void;
+type RemindersActions = {
+  addReminder: (reminder: Omit<Reminder, "id">) => void;
+  updateReminder: (id: string, reminder: Partial<Omit<Reminder, "id">>) => void;
+  removeReminder: (id: string) => void;
+  clearAllReminders: () => void;
 };
 
-export const useRemindersStore = create<BooksState & Actions>()(
+const mockReminders: Reminder[] = [
+  {
+    id: crypto.randomUUID(),
+    title: "Buy groceries",
+    description: "Milk, eggs, bread, cheese",
+    schedule: {
+      type: ScheduleType.ONCE,
+      date: '2025-04-15T12:17:12.953Z',
+    },
+  },
+  {
+    id: crypto.randomUUID(),
+    title: "Call mom",
+    description: "Catch up on family news",
+    schedule: {
+      type: ScheduleType.EVERYDAY,
+      time: '19:00',
+    },
+  },
+];
+
+export const useRemindersStore = create<RemindersState & RemindersActions>()(
   persist(
     (set) => ({
-      books: [],
-      currentBookId: null,
-      progress: {},
+      reminders: mockReminders,
 
-      addBook: (book) =>
-        set((state) => {
-          const id = Date.now();
-          const newBook: Book = { ...book, id, currentPage: 0 };
-          return {
-            books: [...state.books, newBook],
-          };
-        }),
-
-      updateBook: (id, updates) =>
+      addReminder: (reminder) =>
         set((state) => ({
-          books: state.books.map((book) =>
-            book.id === id ? { ...book, ...updates } : book,
+          reminders: [...state.reminders, { ...reminder, id: crypto.randomUUID() }],
+        })),
+
+      updateReminder: (id, updatedReminder) =>
+        set((state) => ({
+          reminders: state.reminders.map((reminder) =>
+            reminder.id === id ? { ...reminder, ...updatedReminder } : reminder
           ),
         })),
 
-      deleteBook: (id) =>
-        set((state) => {
-          const books = state.books.filter((b) => b.id !== id);
-          const current =
-            state.currentBookId === id ? null : state.currentBookId;
-          return { books, currentBookId: current };
-        }),
-
-      markAsRead: (id) =>
-        set((state) => {
-          const books: Book[] = state.books.map((book) =>
-            book.id === id
-              ? { ...book, status: "finished", currentPage: book.totalPages }
-              : book,
-          );
-          const next =
-            books.find((b) => b.status === "reading" && b.id !== id)?.id ||
-            null;
-
-          return { books, currentBookId: next };
-        }),
-
-      startReading: (id) =>
+      removeReminder: (id) =>
         set((state) => ({
-          books: state.books.map((b) =>
-            b.id === id ? { ...b, status: "reading", currentPage: 0 } : b,
-          ),
-          currentBookId: id,
+          reminders: state.reminders.filter((reminder) => reminder.id !== id),
         })),
 
-      rereadBook: (id) =>
-        set((state) => ({
-          books: state.books.map((b) =>
-            b.id === id ? { ...b, status: "reading", currentPage: 0 } : b,
-          ),
-          currentBookId: id,
-        })),
-
-      setCurrentBook: (id) =>
-        set((state) => ({
-          ...state,
-          currentBookId: id,
-        })),
-
-      updateTodayProgress: (progressValue) =>
-        set((state) => {
-          const todayProgressKey = new Date().toISOString().split("T")[0];
-
-          const { progress } = state;
-
-          const newProgress = {
-            ...progress,
-            [todayProgressKey]: progressValue,
-          };
-
-          return {
-            progress: newProgress,
-          };
-        }),
-
-      updateProgress: (date, progressValue) =>
-        set((state) => {
-          const todayProgressKey = date.toISOString().split("T")[0];
-
-          const { progress } = state;
-
-          const newProgress = {
-            ...progress,
-            [todayProgressKey]: progressValue,
-          };
-
-          return {
-            progress: newProgress,
-          };
-        }),
+      clearAllReminders: () => set({ reminders: [] }),
     }),
-    { name: "books-storage" },
+    { name: REMINDER_LOCAL_STORAGE_KEY },
   ),
 );

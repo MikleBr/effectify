@@ -1,0 +1,13 @@
+.react-grid-item.react-grid-placeholder {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: grabbing;
+  border-radius: 12px;
+  outline: 2px dashed var(--muted-foreground);
+  background: var(--muted);
+  outline-offset: -2px;
+  z-index: 2; /* keep dragged item on top */
+}
