@@ -12,7 +12,7 @@ import "/node_modules/react-resizable/css/styles.css";
 import "./DashdoradPage.css";
 import GridLayout, { type Layout } from "react-grid-layout";
 import { useState } from "react";
-import { CheckIcon, EditIcon, Trash2, XIcon } from "lucide-react";
+import { CheckIcon, EditIcon, Minus, Trash2, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PhotoWidget } from "@/widgets/photo-widget";
@@ -128,15 +128,15 @@ export function DashdoradPage() {
           return (
             <div
               key={block.i}
-              className={cn("relative group", editable && "cursor-grab")}
+              className={cn("relative", editable && "cursor-grab")}
             >
               {editable && (
                 <Button
-                  className="rounded-full absolute -left-2 -top-2 size-5 z-20 p-0! hidden group-hover:flex"
-                  variant="destructive"
+                  className="rounded-full absolute -left-2 -top-2 size-5 z-20 p-0! shadow"
+                  variant="secondary"
                   onClick={() => onDelete(block.i as BlockType)}
                 >
-                  <Trash2 className="size-2" />
+                  <Minus className="size-3" />
                 </Button>
               )}
               <Component
