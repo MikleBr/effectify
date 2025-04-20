@@ -12,7 +12,7 @@ import "/node_modules/react-resizable/css/styles.css";
 import "./DashdoradPage.css";
 import GridLayout, { type Layout } from "react-grid-layout";
 import { useState } from "react";
-import { CheckIcon, EditIcon, Minus, Trash2, XIcon } from "lucide-react";
+import { CheckIcon, EditIcon, Minus, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PhotoWidget } from "@/widgets/photo-widget";

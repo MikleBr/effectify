@@ -6,9 +6,7 @@ import { useState } from "react";
 
 type CalendarWidgetProps = CommonWidgetProps;
 
-const today = new Date();
-
-export function CalendarWidget({ className, w, h }: CalendarWidgetProps) {
+export function CalendarWidget({ className, w }: CalendarWidgetProps) {
   const [appointments] = useState(mockAppointments);
 
   const hours = Array.from({ length: 16 }, (_, i) => i + 7); // 7:00 to 22:00

@@ -11,3 +11,11 @@
   outline-offset: -2px;
   z-index: 2; /* keep dragged item on top */
 }
+
+.react-resizable-handle{
+    /* padding: 0; */
+}
+
+.react-resizable-handle:after{
+    /* display: none; */
+}
