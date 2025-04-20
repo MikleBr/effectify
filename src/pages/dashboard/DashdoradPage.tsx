@@ -122,7 +122,6 @@ export function DashdoradPage() {
         isResizable={editable}
         isDraggable={editable}
         onLayoutChange={setTmpLayout}
-        // draggableHandle=".drag-zone"
       >
         {actualLayout.map((block) => {
           const Component = ComponentByType[block.i as BlockType];
