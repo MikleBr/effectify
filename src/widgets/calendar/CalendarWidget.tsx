@@ -21,7 +21,7 @@ export function CalendarWidget({ className, w }: CalendarWidgetProps) {
 
   return (
     <Card className={cn('p-0', className)}>
-      <CardContent className="overflow-auto hide-scrollbar px-2 pt-2 pb-0">
+      <CardContent className="overflow-auto hide-scrollbar px-2 py-0">
         <div className="w-full flex gap-2">
           {Array.from({ length: Math.round(w / 1.5) }, (_, i) => {
             const day = new Date();
@@ -29,17 +29,14 @@ export function CalendarWidget({ className, w }: CalendarWidgetProps) {
             const isToday = day.toDateString() === new Date().toDateString();
 
             return <div className="w-full space-y-0.5" key={i}>
-              <div className="flex justify-center items-center gap-1">
+              <div className="bg-white sticky top-0 pt-2 left-0 flex justify-center items-center gap-1">
                 <div className={cn('mb-1 py-1 px-2 rounded-full flex flex-col items-center justify-center',
                   isToday && 'bg-primary text-primary-foreground'
                 )}>
-                  <div className="text-lg">
-                    {day.getDate()}
-                  </div>
                   <div className="text-xs">
                     {Intl.DateTimeFormat('en-US', {
                       weekday: 'short'
-                      }).format(day)}
+                      }).format(day)}, {day.getDate()}
                   </div>
                 </div>
               </div>
