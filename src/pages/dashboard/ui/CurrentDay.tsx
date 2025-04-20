@@ -14,14 +14,13 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import { CommonWidgetProps } from "@/shared/widgets";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
-type CurrentDayProps = {
-  className?: string;
-};
+type CurrentDayProps = CommonWidgetProps;
 
-export function CurrentDay({ className }: CurrentDayProps) {
+export function CurrentDay({ className, w }: CurrentDayProps) {
   const today = new Date();
 
   const [api, setApi] = useState<CarouselApi | null>(null);
@@ -77,7 +76,9 @@ export function CurrentDay({ className }: CurrentDayProps) {
               const isToday = day.toDateString() === today.toDateString();
 
               return (
-                <CarouselItem className="basis-1/6">
+                <CarouselItem className={cn('basis-1/6', {
+                  'basis-1/2': w === 1,
+                })}>
                   <Button
                     size="sm"
                     variant={isToday ? "default" : "outline"}

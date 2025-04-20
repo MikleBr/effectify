@@ -103,7 +103,7 @@ export function DashdoradPage() {
               variant="destructive"
               onClick={() => {
                 setEditable(false);
-                setCurrentLayout(getInitialLayout());
+                setTmpLayout(null);
               }}
             >
               <XIcon />
@@ -122,6 +122,7 @@ export function DashdoradPage() {
         isResizable={editable}
         isDraggable={editable}
         onLayoutChange={setTmpLayout}
+        // draggableHandle=".drag-zone"
       >
         {actualLayout.map((block) => {
           const Component = ComponentByType[block.i as BlockType];
@@ -132,7 +133,7 @@ export function DashdoradPage() {
             >
               {editable && (
                 <Button
-                  className="rounded-full absolute -left-2 -top-2 size-5 z-10 p-0! hidden group-hover:flex"
+                  className="rounded-full absolute -left-2 -top-2 size-5 z-20 p-0! hidden group-hover:flex"
                   variant="destructive"
                   onClick={() => onDelete(block.i as BlockType)}
                 >
@@ -141,6 +142,8 @@ export function DashdoradPage() {
               )}
               <Component
                 className={cn("size-full", editable && "pointer-events-none")}
+                w={block.w}
+                h={block.h}
               />
             </div>
           );
